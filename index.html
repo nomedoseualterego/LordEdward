@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de Nomes de Falsa Nobreza</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="brasao">👑</div>
+        <h1>Gerador de Nomes de Falsa Nobreza</h1>
+        <p>Para juízes, vigaristas e aspirantes a aristocratas!</p>
+        
+        <input type="text" id="nomeReal" placeholder="Digite seu nome real" required>
+        
+        <select id="nacionalidade">
+            <option value="ingles">Inglês</option>
+            <option value="frances">Francês</option>
+            <option value="espanhol">Espanhol</option>
+            <option value="alemao">Alemão</option>
+            <option value="italiano">Italiano</option>
+            <option value="russo">Russo</option>
+            <option value="portugues">Português</option>
+            <option value="japones">Japonês</option>
+        </select>
+        
+        <button onclick="gerarNome()">Gerar Nome Nobre</button>
+        
+        <div id="resultado"></div>
+        <button onclick="copiarNome()" id="copiar" style="display:none;">Copiar Nome</button>
+        
+        <div class="certificado" id="certificado" style="display:none;">
+            <h2>Certificado de Nobreza Falsa</h2>
+            <p id="textoCertificado"></p>
+            <button onclick="baixarCertificado()">Baixar Certificado</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
