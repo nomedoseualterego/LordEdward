@@ -11,7 +11,7 @@ body {
     background: rgba(255, 255, 255, 0.9);
     border: 2px solid #8B4513;
     border-radius: 10px;
-    max-width: 600px;
+    max-width: 800px;
     margin: 0 auto;
     padding: 20px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
@@ -21,6 +21,13 @@ h1 {
     color: #8B0000;
     font-size: 2.2em;
     text-shadow: 1px 1px 2px #ccc;
+    margin-bottom: 10px;
+}
+
+.subtitulo {
+    font-style: italic;
+    color: #666;
+    margin-bottom: 20px;
 }
 
 select, input, button {
@@ -29,6 +36,8 @@ select, input, button {
     font-size: 16px;
     border: 1px solid #8B4513;
     border-radius: 5px;
+    width: 80%;
+    max-width: 400px;
 }
 
 button {
@@ -43,23 +52,29 @@ button:hover {
 }
 
 #resultado {
-    font-size: 1.5em;
+    font-size: 1.1em;
     margin: 20px;
     padding: 15px;
     background: #FFF8DC;
     border: 1px dashed #8B4513;
     border-radius: 5px;
+    text-align: left;
+    line-height: 1.6;
+}
+
+.parte-nome {
+    font-weight: bold;
+    color: #8B0000;
+    display: block;
+    margin: 8px 0;
+}
+
+.aguardando {
+    color: #666;
+    text-align: center;
 }
 
 .brasao {
     font-size: 50px;
     margin: 10px;
-}
-
-.certificado {
-    margin-top: 20px;
-    padding: 15px;
-    background: #FFF8DC;
-    border: 2px solid #8B4513;
-    border-radius: 5px;
 }
