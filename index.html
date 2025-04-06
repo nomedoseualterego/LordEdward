@@ -61,7 +61,6 @@
     </div>
 
     <script>
-// Banco de dados completo e verificado
 const nomes = {
     PT: {
         M: {
@@ -106,25 +105,23 @@ const nomes = {
     IT: {
         M: {
             proprios: ["Lorenzo", "Vittorio", "Giovanni", "Marco", "Alessandro", "Leonardo", "Francesco"],
-            sobrenomes: ["di Medici", "del Verrocchio", "Borghese", "Montefeltro", "della Rovere", "da Vinci", "de' Medici", "e Montecchio", "del Piemonte", "e Savoia"]
+            sobrenomes: ["di Medici", "del Verrocchio", "Borghese", "Montefeltro", "della Rovere", "da Vinci", "de' Medici"]
         },
         F: {
             proprios: ["Beatrice", "Alessandra", "Giulia", "Isabella", "Sofia", "Chiara", "Valentina"],
-            sobrenomes: ["di Medici", "del Verrocchio", "Borghese", "Montefeltro", "della Rovere", "da Vinci", "de' Medici", "e Genova", "della Toscana", "e Sicilia"]
+            sobrenomes: ["di Medici", "del Verrocchio", "Borghese", "Montefeltro", "della Rovere", "da Vinci", "de' Medici"]
         }
     },
-
     DE: {
         M: {
             proprios: ["Wolfgang", "Adalbert", "Klaus", "Heinrich", "Friedrich", "Ludwig", "Karl"],
-            sobrenomes: ["von Dunkelwald", "zu Niederbayern", "von Hohenzollern", "von Bismarck", "zu Rheinland", "von Preußen", "zu Braunschweig", "von Württemberg", "zu Thüringen", "von Mecklenburg"]
+            sobrenomes: ["von Dunkelwald", "zu Niederbayern", "von Hohenzollern", "von Bismarck", "zu Rheinland", "von Preußen", "zu Braunschweig"]
         },
         F: {
             proprios: ["Gundula", "Hildegard", "Anna", "Greta", "Elsa", "Ingrid", "Ursula"],
-            sobrenomes: ["von Dunkelwald", "zu Niederbayern", "von Hohenzollern", "von Bismarck", "zu Rheinland", "von Preußen", "zu Braunschweig", "von Württemberg", "zu Thüringen", "von Mecklenburg"]
+            sobrenomes: ["von Dunkelwald", "zu Niederbayern", "von Hohenzollern", "von Bismarck", "zu Rheinland", "von Preußen", "zu Braunschweig"]
         }
-    }
-};
+    },
     JP: {
         M: {
             proprios: ["Haruto", "Ren", "Ryoma", "Kaito", "Daiki", "Hiroshi", "Takashi"],
@@ -144,21 +141,19 @@ function gerarNome() {
         
         // Verificação de segurança
         if (!nomes[pais] || !nomes[pais][genero]) {
-            throw new Error("Combinação país/gênero inválida!");
+            throw new Error("Combinação inválida!");
         }
         
         const dados = nomes[pais][genero];
-        const componentes = [
-            ...dados.proprios.sort(() => Math.random() - 0.5).slice(0, 2),
-            ...dados.sobrenomes.sort(() => Math.random() - 0.5).slice(0, 6)
-        ];
+        const nomesProprios = [...dados.proprios].sort(() => Math.random() - 0.5).slice(0, 2);
+        const sobrenomes = [...dados.sobrenomes].sort(() => Math.random() - 0.5).slice(0, 6);
         
         // Formatação especial para japonês
-        const nomeFinal = (pais === "JP") 
-            ? componentes.reverse().join(" ") 
-            : componentes.join(" ");
+        const componentes = (pais === "JP") 
+            ? [...sobrenomes, ...nomesProprios]
+            : [...nomesProprios, ...sobrenomes];
         
-        document.getElementById("resultado").innerHTML = nomeFinal;
+        document.getElementById("resultado").innerHTML = componentes.join(" ");
         
     } catch (e) {
         document.getElementById("resultado").innerHTML = `Erro: ${e.message}`;
