@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gerador de Nomes de Falsa Nobreza (8 Partes)</title>
+    <title>Gerador de Nomes Aristocráticos</title>
     <style>
         body {
             font-family: 'Times New Roman', serif;
@@ -53,10 +53,6 @@
             text-align: left;
             line-height: 1.6;
         }
-        .brasao {
-            font-size: 50px;
-            margin: 10px;
-        }
         .parte-nome {
             font-weight: bold;
             color: #8B0000;
@@ -65,9 +61,8 @@
 </head>
 <body>
     <div class="container">
-        <div class="brasao">👑</div>
-        <h1>Gerador de Nomes de Falsa Nobreza</h1>
-        <p><em>Nomes com 8 partes obrigatórias - porque menos que isso é plebeu!</em></p>
+        <h1>Gerador de Nomes Aristocráticos</h1>
+        <p><em>8 partes nobres - sem títulos ou cargos, apenas nomes legítimos</em></p>
         
         <input type="text" id="nomeReal" placeholder="Qual seu nome verdadeiro? (opcional)">
         
@@ -87,26 +82,91 @@
         <div id="resultado">
             <p>Aguardando geração... Seu nome terá exatamente 8 partes nobres!</p>
         </div>
-        
-        <div id="certificado-container" style="display: none;">
-            <!-- Estrutura do certificado aqui -->
-        </div>
     </div>
 
     <script>
-        // Banco de dados reduzido para exemplo (implemente todas as 200+ opções)
+        // Banco de dados mínimo para todas as nacionalidades
         const nomes = {
             ingles: {
-                titulos: ["Sir", "Lord", "Baron", "Duke", "Earl", "Viscount", "Marquess", "Baronet"],
-                primeirosNomes: ["Edward", "Algernon", "Bartholomew", "Reginald", "Percival"],
-                segundosNomes: ["Lancelot", "Montgomery", "Fitzwilliam", "Thaddeus", "Winston"],
-                sobrenomes1: ["Dodd", "Wickfield", "Baskerville", "Huntington-Smythe"],
-                sobrenomes2: ["Canterbury", "Caterham", "Blackwood", "Ravenshire"],
-                lugares: ["of Windsor", "of the Royal Borough", "of Sussex"],
-                terceirosNomes: ["the Third", "the Magnificent", "the Unshaven"],
-                quartoLugar: ["Keeper of the Royal Gardens", "Protector of the Realm"]
+                parte1: ["Edward", "Algernon", "Bartholomew", "Reginald", "Percival"],
+                parte2: ["Lancelot", "Montgomery", "Fitzwilliam", "Thaddeus", "Winston"],
+                parte3: ["Dodd", "Wickfield", "Baskerville", "Huntington", "Pemberley"],
+                parte4: ["Canterbury", "Caterham", "Blackwood", "Ravenshire", "Worthington"],
+                parte5: ["Fairfax", "Gillingham", "Hargreaves", "Inverness", "Jarndyce"],
+                parte6: ["Kensington", "Lancaster", "Montague", "Northumberland", "Rutland"],
+                parte7: ["Somerset", "Trenton", "Upton", "Vernon", "Winchester"],
+                parte8: ["Yorkshire", "Zetland", "Ashworth", "Blackwood", "Cumberland"]
             },
-            // Adicione outras nacionalidades seguindo o mesmo padrão
+            frances: {
+                parte1: ["Gaspard", "Lucien", "Thibault", "Chantal", "Élodie"],
+                parte2: ["Jean", "Marie", "Pierre", "Antoinette", "François"],
+                parte3: ["de La Rochefoucauld", "du Montclair", "Beausoleil", "de Saint-Exupéry"],
+                parte4: ["de Provence", "de Champagne", "de Versailles", "de Bourgogne"],
+                parte5: ["de La Fontaine", "du Pré", "de Saint-Germain", "de Beauvoir"],
+                parte6: ["de La Tour", "du Bois", "de Montpellier", "de La Salle"],
+                parte7: ["de La Vallière", "du Lac", "de Saint-Clair", "de La Mer"],
+                parte8: ["de La Plume", "du Soleil", "de Saint-Honoré", "de La Lune"]
+            },
+            espanhol: {
+                parte1: ["Alfonso", "Rodrigo", "Inés", "Beatriz", "Carlos"],
+                parte2: ["Fernando", "Isabel", "Miguel", "Teresa", "Javier"],
+                parte3: ["del Toro", "de la Vega", "y Goya", "y Cervantes"],
+                parte4: ["de Sevilla", "de Barcelona", "de Madrid", "de Aragón"],
+                parte5: ["de Castilla", "de León", "de Granada", "de Valencia"],
+                parte6: ["y Mendoza", "y Toledo", "y Zaragoza", "y Salamanca"],
+                parte7: ["de La Mancha", "de Los Reyes", "de Las Navas", "de Jerez"],
+                parte8: ["y Figueroa", "y Guzmán", "y Álvarez", "y Ortega"]
+            },
+            alemao: {
+                parte1: ["Wolfgang", "Adalbert", "Gundula", "Hildegard", "Klaus"],
+                parte2: ["Heinrich", "Friedrich", "Ludwig", "Anna", "Karl"],
+                parte3: ["von Dunkelwald", "zu Niederbayern", "von Hohenzollern"],
+                parte4: ["von Schwarzwald", "zu Rheinland", "von Sachsen"],
+                parte5: ["von und zu", "von der", "zum", "zur"],
+                parte6: ["von Preußen", "zu Bayern", "von Österreich"],
+                parte7: ["von Hannover", "zu Braunschweig", "von Hessen"],
+                parte8: ["von Württemberg", "zu Thüringen", "von Mecklenburg"]
+            },
+            italiano: {
+                parte1: ["Lorenzo", "Vittorio", "Beatrice", "Alessandra", "Giovanni"],
+                parte2: ["Francesco", "Maria", "Lucrezia", "Marco", "Paolo"],
+                parte3: ["di Medici", "del Verrocchio", "Borghese", "Montefeltro"],
+                parte4: ["della Rovere", "degli Albizzi", "da Vinci", "de' Medici"],
+                parte5: ["di Firenze", "di Venezia", "di Milano", "di Roma"],
+                parte6: ["e Montecchio", "e Verona", "e Padova", "e Bologna"],
+                parte7: ["del Piemonte", "della Lombardia", "della Toscana"],
+                parte8: ["e Savoia", "e Genova", "e Napoli", "e Sicilia"]
+            },
+            russo: {
+                parte1: ["Dmitri", "Ivan", "Anastasia", "Ekaterina", "Sergei"],
+                parte2: ["Petrovich", "Nikolaevna", "Sergeyevich", "Ivanovna"],
+                parte3: ["Volkov", "Romanov", "Orlov", "Yusupov", "Smirnov"],
+                parte4: ["ovich", "evich", "ovna", "evna", "inichna"],
+                parte5: ["Sokolov", "Lebedev", "Kuznetsov", "Popov", "Vasiliev"],
+                parte6: ["Andreevich", "Dmitrievna", "Fedorovich", "Mikhailovna"],
+                parte7: ["Borisov", "Grigoriev", "Pavlov", "Semenov", "Tarasov"],
+                parte8: ["Alexandrovich", "Bogdanovna", "Constantinovich", "Daniilovna"]
+            },
+            portugues: {
+                parte1: ["Afonso", "Leonor", "Rodrigo", "Isabel", "Duarte"],
+                parte2: ["Fernando", "Beatriz", "João", "Filipa", "Nuno"],
+                parte3: ["de Bragança", "e Castro", "Albuquerque", "Távora"],
+                parte4: ["de Lisboa", "do Porto", "de Coimbra", "de Évora"],
+                parte5: ["e Menezes", "e Sousa", "e Vasconcelos", "e Azevedo"],
+                parte6: ["da Silva", "do Vale", "das Neves", "dos Santos"],
+                parte7: ["e Oliveira", "e Carvalho", "e Ribeiro", "e Pereira"],
+                parte8: ["de Noronha", "e Cunha", "de Melo", "de Resende"]
+            },
+            japones: {
+                parte1: ["Haruto", "Ren", "Sakura", "Aiko", "Ryoma"],
+                parte2: ["Nobunaga", "Hiroshi", "Yukiko", "Takashi", "Naoko"],
+                parte3: ["Fujiwara", "Takeda", "Shimazu", "Kuroda", "Date"],
+                parte4: ["no Takeda", "no Shimazu", "no Kuroda", "no Date"],
+                parte5: ["Minamoto", "Taira", "Hojo", "Ashikaga", "Tokugawa"],
+                parte6: ["Yamamoto", "Tanaka", "Watanabe", "Ito", "Nakamura"],
+                parte7: ["no Kami", "ushi", "maro", "suke", "tomo"],
+                parte8: ["Matsudaira", "Oda", "Uesugi", "Sanada", "Mori"]
+            }
         };
 
         function rand(max) {
@@ -117,25 +177,25 @@
             const nacionalidade = document.getElementById("nacionalidade").value;
             const dados = nomes[nacionalidade];
             
-            // Garante que cada parte venha de uma categoria diferente
+            // Gera cada parte do nome
             const partes = [
-                { label: "Título", value: dados.titulos[rand(dados.titulos.length)] },
-                { label: "Primeiro Nome", value: dados.primeirosNomes[rand(dados.primeirosNomes.length)] },
-                { label: "Segundo Nome", value: dados.segundosNomes[rand(dados.segundosNomes.length)] },
-                { label: "Sobrenome Principal", value: dados.sobrenomes1[rand(dados.sobrenomes1.length)] },
-                { label: "Sobrenome Secundário", value: dados.sobrenomes2[rand(dados.sobrenomes2.length)] },
-                { label: "Lugar", value: dados.lugares[rand(dados.lugares.length)] },
-                { label: "Título Secundário", value: dados.terceirosNomes[rand(dados.terceirosNomes.length)] },
-                { label: "Cargo Honorífico", value: dados.quartoLugar[rand(dados.quartoLugar.length)] }
+                { label: "Nome Principal", value: dados.parte1[rand(dados.parte1.length)] },
+                { label: "Nome Secundário", value: dados.parte2[rand(dados.parte2.length)] },
+                { label: "Sobrenome 1", value: dados.parte3[rand(dados.parte3.length)] },
+                { label: "Sobrenome 2", value: dados.parte4[rand(dados.parte4.length)] },
+                { label: "Sobrenome 3", value: dados.parte5[rand(dados.parte5.length)] },
+                { label: "Sobrenome 4", value: dados.parte6[rand(dados.parte6.length)] },
+                { label: "Sobrenome 5", value: dados.parte7[rand(dados.parte7.length)] },
+                { label: "Sobrenome 6", value: dados.parte8[rand(dados.parte8.length)] }
             ];
             
             // Exibe o resultado formatado
-            let resultadoHTML = "<h3>Seu Nome Completo de Nobreza:</h3>";
+            let resultadoHTML = "<h3>Seu Nome Aristocrático Completo:</h3>";
             partes.forEach((parte, index) => {
                 resultadoHTML += `<p><span class="parte-nome">Parte ${index + 1}:</span> ${parte.value} <small>(${parte.label})</small></p>`;
             });
             
-            // Junta todas as partes para o nome completo
+            // Forma oficial sem rótulos
             const nomeCompleto = partes.map(p => p.value).join(" ");
             resultadoHTML += `<h3 style='margin-top:20px;'>Forma Oficial:</h3><p>"${nomeCompleto}"</p>`;
             
