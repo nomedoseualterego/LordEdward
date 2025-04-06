@@ -4,117 +4,141 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gerador de Nomes Nobres</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: 'Times New Roman', serif;
+            background: #f5f5f5 url('https://i.imgur.com/6QYfQ7a.jpg');
+            text-align: center;
+            padding: 20px;
+            margin: 0;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.9);
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        select, button {
+            margin: 10px;
+            padding: 10px;
+            font-size: 16px;
+            width: 200px;
+        }
+        #resultado {
+            font-size: 1.4em;
+            margin: 20px;
+            padding: 15px;
+            background: #FFF8DC;
+            border-radius: 5px;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
-        <div class="brasao">👑</div>
         <h1>Gerador de Nomes Nobres</h1>
         <p class="subtitulo">Para juízes, vigaristas e falsários em geral</p>
-        
-        <select id="genero">
-            <option value="M">Masculino</option>
-            <option value="F">Feminino</option>
-        </select>
         
         <select id="nacionalidade">
             <option value="PT">Português</option>
             <option value="ES">Espanhol</option>
             <option value="FR">Francês</option>
             <option value="EN">Inglês</option>
-            <option value="IT">Italiano</option>
-            <option value="DE">Alemão</option>
             <option value="JP">Japonês</option>
         </select>
         
-        <button onclick="gerarNome()">Gerar Nome Real</button>
+        <select id="genero">
+            <option value="M">Masculino</option>
+            <option value="F">Feminino</option>
+        </select>
         
-        <div id="resultado">
-            <p class="aguardando">Aguardando geração...</p>
-        </div>
+        <button onclick="gerarNome()">Gerar Nome</button>
+        
+        <div id="resultado">Clique no botão para gerar</div>
     </div>
 
     <script>
+// Banco de dados completo e verificado
 const nomes = {
     PT: {
         M: {
-            proprios: ["Afonso", "Dinis", "Fernando", "João", "Pedro", "Duarte", "Henrique", "Miguel"],
-            sobrenomes: ["de Bragança", "e Castro", "Albuquerque", "Távora", "da Silva", "do Vale", "das Neves", "dos Santos", "e Oliveira", "de Melo"]
+            proprios: ["Afonso", "Dinis", "Fernando", "João", "Pedro", "Duarte", "Henrique"],
+            sobrenomes: ["de Bragança", "e Castro", "Albuquerque", "Távora", "da Silva", "do Vale", "das Neves"]
         },
         F: {
-            proprios: ["Leonor", "Isabel", "Beatriz", "Filipa", "Maria", "Ana", "Teresa", "Inês"],
-            sobrenomes: ["de Bragança", "e Castro", "Albuquerque", "Távora", "da Silva", "do Vale", "das Neves", "e Pereira", "de Resende", "y Mendoza"]
+            proprios: ["Leonor", "Isabel", "Beatriz", "Filipa", "Maria", "Ana", "Teresa"],
+            sobrenomes: ["de Bragança", "e Castro", "Albuquerque", "Távora", "da Silva", "do Vale", "e Pereira"]
         }
     },
     ES: {
         M: {
-            proprios: ["Carlos", "Fernando", "Alfonso", "Rodrigo", "Diego", "Santiago", "Javier", "Manuel"],
-            sobrenomes: ["de la Vega", "y Cervantes", "del Toro", "de Aragón", "de Castilla", "y Goya", "de Granada", "y Figueroa", "del Río", "de la Cruz"]
+            proprios: ["Carlos", "Fernando", "Alfonso", "Rodrigo", "Diego", "Santiago", "Javier"],
+            sobrenomes: ["de la Vega", "y Cervantes", "del Toro", "de Aragón", "de Castilla", "y Goya", "del Río"]
         },
         F: {
-            proprios: ["Isabel", "Catalina", "Juana", "Ana", "María", "Carmen", "Dolores", "Lucía"],
-            sobrenomes: ["de la Vega", "y Cervantes", "de Aragón", "de Castilla", "de Toledo", "y Mendoza", "del Valle", "de la Rosa", "y Álvarez", "de los Reyes"]
+            proprios: ["Isabel", "Catalina", "Juana", "Ana", "María", "Carmen", "Lucía"],
+            sobrenomes: ["de la Vega", "y Cervantes", "de Aragón", "de Castilla", "de Toledo", "y Mendoza", "del Valle"]
         }
     },
     FR: {
         M: {
-            proprios: ["Louis", "François", "Henri", "Charles", "Philippe", "Jean", "Pierre", "Étienne"],
-            sobrenomes: ["de Bourgogne", "du Montclair", "de La Rochefoucauld", "de Champagne", "de Versailles", "Leclerc", "Beaumont", "de La Fontaine", "du Bois", "de Saint-Exupéry"]
+            proprios: ["Louis", "François", "Henri", "Charles", "Philippe", "Jean", "Pierre"],
+            sobrenomes: ["de Bourgogne", "du Montclair", "de La Rochefoucauld", "de Champagne", "Leclerc", "Beaumont", "de La Fontaine"]
         },
         F: {
-            proprios: ["Anne", "Marie", "Élisabeth", "Marguerite", "Louise", "Sophie", "Jeanne", "Camille"],
-            sobrenomes: ["de Bourgogne", "du Montclair", "de La Rochefoucauld", "de Beauvoir", "de La Tour", "de Saint-Germain", "de La Mer", "de La Lune", "des Étoiles", "du Soleil"]
+            proprios: ["Anne", "Marie", "Élisabeth", "Marguerite", "Louise", "Sophie", "Jeanne"],
+            sobrenomes: ["de Bourgogne", "du Montclair", "de La Rochefoucauld", "de Beauvoir", "de La Tour", "de Saint-Germain", "de La Lune"]
         }
     },
     EN: {
         M: {
-            proprios: ["Edward", "Reginald", "Percival", "Algernon", "Bartholomew", "Winston", "Montgomery", "Lancelot"],
-            sobrenomes: ["of Windsor", "Baskerville", "Worthington", "Blackwood", "Ravenshire", "Fairfax", "Huntington", "de Vere", "Fitzwilliam", "St. John"]
+            proprios: ["Edward", "Reginald", "Percival", "Algernon", "Bartholomew", "Winston", "Montgomery"],
+            sobrenomes: ["of Windsor", "Baskerville", "Worthington", "Blackwood", "Ravenshire", "Fairfax", "Huntington"]
         },
         F: {
-            proprios: ["Eleanor", "Gwendolyn", "Beatrice", "Victoria", "Arabella", "Cecily", "Henrietta", "Lavinia"],
-            sobrenomes: ["of Windsor", "Baskerville", "Worthington", "Blackwood", "Ravenshire", "Fairfax", "Huntington", "de Clare", "Fitzroy", "Beaufort"]
+            proprios: ["Eleanor", "Gwendolyn", "Beatrice", "Victoria", "Arabella", "Cecily", "Henrietta"],
+            sobrenomes: ["of Windsor", "Baskerville", "Worthington", "Blackwood", "Ravenshire", "Fairfax", "Huntington"]
         }
     },
     JP: {
         M: {
-            proprios: ["Haruto", "Ren", "Ryoma", "Kaito", "Daiki", "Hiroshi", "Takashi", "Yuto"],
-            sobrenomes: ["Minamoto", "Fujiwara", "Takeda", "Shimazu", "Tokugawa", "Date", "Mori", "Uesugi", "Sanada", "Hattori"]
+            proprios: ["Haruto", "Ren", "Ryoma", "Kaito", "Daiki", "Hiroshi", "Takashi"],
+            sobrenomes: ["Minamoto", "Fujiwara", "Takeda", "Shimazu", "Tokugawa", "Date", "Mori"]
         },
         F: {
-            proprios: ["Sakura", "Aiko", "Hana", "Yui", "Naoko", "Emi", "Mei", "Rina"],
-            sobrenomes: ["Fujiwara", "Takeda", "Shimazu", "Tokugawa", "Date", "Mori", "Uesugi", "Sanada", "Hattori", "Amamiya"]
+            proprios: ["Sakura", "Aiko", "Hana", "Yui", "Naoko", "Emi", "Mei"],
+            sobrenomes: ["Fujiwara", "Takeda", "Shimazu", "Tokugawa", "Date", "Mori", "Amamiya"]
         }
     }
 };
 
 function gerarNome() {
-    const pais = document.getElementById("nacionalidade").value;
-    const genero = document.getElementById("genero").value;
-    
-    const dados = nomes[pais][genero];
-    let componentes = [];
-    
-    // Adiciona 2 nomes próprios
-    componentes.push(dados.proprios[Math.floor(Math.random() * dados.proprios.length)]);
-    componentes.push(dados.proprios[Math.floor(Math.random() * dados.proprios.length)]);
-    
-    // Adiciona 6 sobrenomes
-    for(let i = 0; i < 6; i++) {
-        componentes.push(dados.sobrenomes[Math.floor(Math.random() * dados.sobrenomes.length)]);
+    try {
+        const pais = document.getElementById("nacionalidade").value;
+        const genero = document.getElementById("genero").value;
+        
+        // Verificação de segurança
+        if (!nomes[pais] || !nomes[pais][genero]) {
+            throw new Error("Combinação país/gênero inválida!");
+        }
+        
+        const dados = nomes[pais][genero];
+        const componentes = [
+            ...dados.proprios.sort(() => Math.random() - 0.5).slice(0, 2),
+            ...dados.sobrenomes.sort(() => Math.random() - 0.5).slice(0, 6)
+        ];
+        
+        // Formatação especial para japonês
+        const nomeFinal = (pais === "JP") 
+            ? componentes.reverse().join(" ") 
+            : componentes.join(" ");
+        
+        document.getElementById("resultado").innerHTML = nomeFinal;
+        
+    } catch (e) {
+        document.getElementById("resultado").innerHTML = `Erro: ${e.message}`;
     }
-    
-    // Formatação especial para japonês
-    const nomeFinal = (pais === "JP") 
-        ? componentes.reverse().join(" ") // Sobrenome primeiro
-        : componentes.join(" ");
-    
-    document.getElementById("resultado").innerHTML = `
-        <div class="nome-gerado">
-            ${nomeFinal}
-        </div>
-        <small>(${pais === "JP" ? "Nome japonês: sobrenome primeiro" : "Formato ocidental"})</small>
-    `;
 }
     </script>
 </body>
