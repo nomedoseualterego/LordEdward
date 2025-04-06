@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gerador de Nomes Nobres</title>
+    <title>Lord Edward Generator</title>
     <style>
         body {
             font-family: 'Times New Roman', serif;
@@ -16,29 +16,49 @@
             background: rgba(255, 255, 255, 0.9);
             max-width: 600px;
             margin: 20px auto;
-            padding: 20px;
+            padding: 30px;
             border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
+        }
+        h1 {
+            color: #8B0000;
+            border-bottom: 2px solid #8B4513;
+            padding-bottom: 10px;
         }
         select, button {
-            margin: 10px;
-            padding: 10px;
+            margin: 15px;
+            padding: 12px;
             font-size: 16px;
-            width: 200px;
+            width: 80%;
+            max-width: 300px;
+            border: 2px solid #8B4513;
+            border-radius: 5px;
+        }
+        button {
+            background: #8B0000;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        button:hover {
+            background: #A52A2A;
+            transform: scale(1.05);
         }
         #resultado {
-            font-size: 1.4em;
-            margin: 20px;
-            padding: 15px;
+            font-size: 1.3em;
+            margin: 25px auto;
+            padding: 20px;
             background: #FFF8DC;
+            border: 2px dashed #8B4513;
             border-radius: 5px;
+            min-height: 100px;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Gerador de Nomes Nobres</h1>
-        <p class="subtitulo">Para juízes, vigaristas e falsários em geral</p>
+        <p style="color: #666; margin-bottom: 25px;">Para juízes, vigaristas e falsários em geral</p>
         
         <select id="nacionalidade">
             <option value="PT">Português</option>
@@ -55,81 +75,82 @@
             <option value="F">Feminino</option>
         </select>
         
-        <button onclick="gerarNome()">Gerar Nome</button>
+        <button onclick="gerarNome()">Criar Identidade Nobre</button>
         
-        <div id="resultado">Clique no botão para gerar</div>
+        <div id="resultado">Seu nome aparecerá aqui...</div>
     </div>
 
     <script>
+// Banco de dados completo e verificado
 const nomes = {
     PT: {
         M: {
-            proprios: ["Afonso", "Dinis", "Fernando", "João", "Pedro", "Duarte", "Henrique"],
-            sobrenomes: ["de Bragança", "e Castro", "Albuquerque", "Távora", "da Silva", "do Vale", "das Neves"]
+            proprios: ["Afonso", "Dinis", "Fernando", "João", "Pedro", "Duarte", "Henrique", "Sancho", "Miguel"],
+            sobrenomes: ["de Bragança", "e Castro", "Albuquerque", "Távora", "da Silva", "do Vale", "das Neves", "dos Santos", "e Oliveira", "de Melo"]
         },
         F: {
-            proprios: ["Leonor", "Isabel", "Beatriz", "Filipa", "Maria", "Ana", "Teresa"],
-            sobrenomes: ["de Bragança", "e Castro", "Albuquerque", "Távora", "da Silva", "do Vale", "e Pereira"]
+            proprios: ["Leonor", "Isabel", "Beatriz", "Filipa", "Maria", "Ana", "Teresa", "Inês", "Mafalda"],
+            sobrenomes: ["de Bragança", "e Castro", "Albuquerque", "Távora", "da Silva", "do Vale", "e Pereira", "de Resende", "y Mendoza", "das Dores"]
         }
     },
     ES: {
         M: {
-            proprios: ["Carlos", "Fernando", "Alfonso", "Rodrigo", "Diego", "Santiago", "Javier"],
-            sobrenomes: ["de la Vega", "y Cervantes", "del Toro", "de Aragón", "de Castilla", "y Goya", "del Río"]
+            proprios: ["Carlos", "Fernando", "Alfonso", "Rodrigo", "Diego", "Santiago", "Javier", "Manuel", "Antonio"],
+            sobrenomes: ["de la Vega", "y Cervantes", "del Toro", "de Aragón", "de Castilla", "y Goya", "del Río", "de la Cruz", "y Álvarez", "de los Reyes"]
         },
         F: {
-            proprios: ["Isabel", "Catalina", "Juana", "Ana", "María", "Carmen", "Lucía"],
-            sobrenomes: ["de la Vega", "y Cervantes", "de Aragón", "de Castilla", "de Toledo", "y Mendoza", "del Valle"]
+            proprios: ["Isabel", "Catalina", "Juana", "Ana", "María", "Carmen", "Dolores", "Lucía", "Elena"],
+            sobrenomes: ["de la Vega", "y Cervantes", "de Aragón", "de Castilla", "de Toledo", "y Mendoza", "del Valle", "de la Rosa", "y Ortega", "de la Fuente"]
         }
     },
     FR: {
         M: {
-            proprios: ["Louis", "François", "Henri", "Charles", "Philippe", "Jean", "Pierre"],
-            sobrenomes: ["de Bourgogne", "du Montclair", "de La Rochefoucauld", "de Champagne", "Leclerc", "Beaumont", "de La Fontaine"]
+            proprios: ["Louis", "François", "Henri", "Charles", "Philippe", "Jean", "Pierre", "Étienne", "Luc"],
+            sobrenomes: ["de Bourgogne", "du Montclair", "de La Rochefoucauld", "de Champagne", "Leclerc", "Beaumont", "de La Fontaine", "du Bois", "de Saint-Exupéry", "Maréchal"]
         },
         F: {
-            proprios: ["Anne", "Marie", "Élisabeth", "Marguerite", "Louise", "Sophie", "Jeanne"],
-            sobrenomes: ["de Bourgogne", "du Montclair", "de La Rochefoucauld", "de Beauvoir", "de La Tour", "de Saint-Germain", "de La Lune"]
+            proprios: ["Anne", "Marie", "Élisabeth", "Marguerite", "Louise", "Sophie", "Jeanne", "Camille", "Céleste"],
+            sobrenomes: ["de Bourgogne", "du Montclair", "de La Rochefoucauld", "de Beauvoir", "de La Tour", "de Saint-Germain", "de La Mer", "de La Lune", "des Étoiles", "du Soleil"]
         }
     },
     EN: {
         M: {
-            proprios: ["Edward", "Reginald", "Percival", "Algernon", "Bartholomew", "Winston", "Montgomery"],
-            sobrenomes: ["of Windsor", "Baskerville", "Worthington", "Blackwood", "Ravenshire", "Fairfax", "Huntington"]
+            proprios: ["Edward", "Reginald", "Percival", "Algernon", "Bartholomew", "Winston", "Montgomery", "Lancelot", "Archibald"],
+            sobrenomes: ["of Windsor", "Baskerville", "Worthington", "Blackwood", "Ravenshire", "Fairfax", "Huntington", "de Vere", "Fitzwilliam", "St. John"]
         },
         F: {
-            proprios: ["Eleanor", "Gwendolyn", "Beatrice", "Victoria", "Arabella", "Cecily", "Henrietta"],
-            sobrenomes: ["of Windsor", "Baskerville", "Worthington", "Blackwood", "Ravenshire", "Fairfax", "Huntington"]
+            proprios: ["Eleanor", "Gwendolyn", "Beatrice", "Victoria", "Arabella", "Cecily", "Henrietta", "Lavinia", "Ophelia"],
+            sobrenomes: ["of Windsor", "Baskerville", "Worthington", "Blackwood", "Ravenshire", "Fairfax", "Huntington", "de Clare", "Fitzroy", "Beaufort"]
         }
     },
     IT: {
         M: {
-            proprios: ["Lorenzo", "Vittorio", "Giovanni", "Marco", "Alessandro", "Leonardo", "Francesco"],
-            sobrenomes: ["di Medici", "del Verrocchio", "Borghese", "Montefeltro", "della Rovere", "da Vinci", "de' Medici"]
+            proprios: ["Lorenzo", "Vittorio", "Giovanni", "Marco", "Alessandro", "Leonardo", "Francesco", "Dante", "Enzo"],
+            sobrenomes: ["di Medici", "del Verrocchio", "Borghese", "Montefeltro", "della Rovere", "da Vinci", "de' Medici", "e Montecchio", "del Piemonte", "e Savoia"]
         },
         F: {
-            proprios: ["Beatrice", "Alessandra", "Giulia", "Isabella", "Sofia", "Chiara", "Valentina"],
-            sobrenomes: ["di Medici", "del Verrocchio", "Borghese", "Montefeltro", "della Rovere", "da Vinci", "de' Medici"]
+            proprios: ["Beatrice", "Alessandra", "Giulia", "Isabella", "Sofia", "Chiara", "Valentina", "Gabriella", "Fiammetta"],
+            sobrenomes: ["di Medici", "del Verrocchio", "Borghese", "Montefeltro", "della Rovere", "da Vinci", "de' Medici", "e Genova", "della Toscana", "e Sicilia"]
         }
     },
     DE: {
         M: {
-            proprios: ["Wolfgang", "Adalbert", "Klaus", "Heinrich", "Friedrich", "Ludwig", "Karl"],
-            sobrenomes: ["von Dunkelwald", "zu Niederbayern", "von Hohenzollern", "von Bismarck", "zu Rheinland", "von Preußen", "zu Braunschweig"]
+            proprios: ["Wolfgang", "Adalbert", "Klaus", "Heinrich", "Friedrich", "Ludwig", "Karl", "Otto", "Rainer"],
+            sobrenomes: ["von Dunkelwald", "zu Niederbayern", "von Hohenzollern", "von Bismarck", "zu Rheinland", "von Preußen", "zu Braunschweig", "von Württemberg", "zu Thüringen", "von Mecklenburg"]
         },
         F: {
-            proprios: ["Gundula", "Hildegard", "Anna", "Greta", "Elsa", "Ingrid", "Ursula"],
-            sobrenomes: ["von Dunkelwald", "zu Niederbayern", "von Hohenzollern", "von Bismarck", "zu Rheinland", "von Preußen", "zu Braunschweig"]
+            proprios: ["Gundula", "Hildegard", "Anna", "Greta", "Elsa", "Ingrid", "Ursula", "Klara", "Lieselotte"],
+            sobrenomes: ["von Dunkelwald", "zu Niederbayern", "von Hohenzollern", "von Bismarck", "zu Rheinland", "von Preußen", "zu Braunschweig", "von Württemberg", "zu Thüringen", "von Mecklenburg"]
         }
     },
     JP: {
         M: {
-            proprios: ["Haruto", "Ren", "Ryoma", "Kaito", "Daiki", "Hiroshi", "Takashi"],
-            sobrenomes: ["Minamoto", "Fujiwara", "Takeda", "Shimazu", "Tokugawa", "Date", "Mori"]
+            proprios: ["Haruto", "Ren", "Ryoma", "Kaito", "Daiki", "Hiroshi", "Takashi", "Yuto", "Sora"],
+            sobrenomes: ["Minamoto", "Fujiwara", "Takeda", "Shimazu", "Tokugawa", "Date", "Mori", "Uesugi", "Sanada", "Hattori"]
         },
         F: {
-            proprios: ["Sakura", "Aiko", "Hana", "Yui", "Naoko", "Emi", "Mei"],
-            sobrenomes: ["Fujiwara", "Takeda", "Shimazu", "Tokugawa", "Date", "Mori", "Amamiya"]
+            proprios: ["Sakura", "Aiko", "Hana", "Yui", "Naoko", "Emi", "Mei", "Rina", "Yumi"],
+            sobrenomes: ["Fujiwara", "Takeda", "Shimazu", "Tokugawa", "Date", "Mori", "Amamiya", "Nakamura", "Ito", "Yamamoto"]
         }
     }
 };
@@ -141,22 +162,22 @@ function gerarNome() {
         
         // Verificação de segurança
         if (!nomes[pais] || !nomes[pais][genero]) {
-            throw new Error("Combinação inválida!");
+            throw new Error("Configuração inválida!");
         }
         
         const dados = nomes[pais][genero];
         const nomesProprios = [...dados.proprios].sort(() => Math.random() - 0.5).slice(0, 2);
         const sobrenomes = [...dados.sobrenomes].sort(() => Math.random() - 0.5).slice(0, 6);
         
-        // Formatação especial para japonês
+        // Lógica especial para japonês
         const componentes = (pais === "JP") 
-            ? [...sobrenomes, ...nomesProprios]
+            ? [...sobrenomes, ...nomesProprios] 
             : [...nomesProprios, ...sobrenomes];
         
         document.getElementById("resultado").innerHTML = componentes.join(" ");
-        
+
     } catch (e) {
-        document.getElementById("resultado").innerHTML = `Erro: ${e.message}`;
+        document.getElementById("resultado").innerHTML = `⚠ Erro: ${e.message}`;
     }
 }
     </script>
