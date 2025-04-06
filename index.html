@@ -3,41 +3,119 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gerador de Nomes Aristocráticos</title>
+    <title>Gerador de Nomes Nobres</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
         <div class="brasao">👑</div>
-        <h1>Gerador de Nomes Aristocráticos</h1>
+        <h1>Gerador de Nomes Nobres</h1>
         <p class="subtitulo">Para juízes, vigaristas e falsários em geral</p>
         
-        <input type="text" id="nomeReal" placeholder="Qual seu nome verdadeiro? (opcional)">
-        
         <select id="genero">
-            <option value="masculino">Masculino</option>
-            <option value="feminino">Feminino</option>
-            <option value="neutro">Neutro</option>
+            <option value="M">Masculino</option>
+            <option value="F">Feminino</option>
         </select>
         
         <select id="nacionalidade">
-            <option value="ingles">Inglês</option>
-            <option value="frances">Francês</option>
-            <option value="espanhol">Espanhol</option>
-            <option value="alemao">Alemão</option>
-            <option value="italiano">Italiano</option>
-            <option value="russo">Russo</option>
-            <option value="portugues">Português</option>
-            <option value="japones">Japonês</option>
+            <option value="PT">Português</option>
+            <option value="ES">Espanhol</option>
+            <option value="FR">Francês</option>
+            <option value="EN">Inglês</option>
+            <option value="IT">Italiano</option>
+            <option value="DE">Alemão</option>
+            <option value="JP">Japonês</option>
         </select>
         
-        <button onclick="gerarNome()">Gerar Nome Completo</button>
+        <button onclick="gerarNome()">Gerar Nome Real</button>
         
         <div id="resultado">
-            <p class="aguardando">Aguardando geração... Seu nome terá exatamente 8 partes nobres!</p>
+            <p class="aguardando">Aguardando geração...</p>
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+const nomes = {
+    PT: {
+        M: {
+            proprios: ["Afonso", "Dinis", "Fernando", "João", "Pedro", "Duarte", "Henrique", "Miguel"],
+            sobrenomes: ["de Bragança", "e Castro", "Albuquerque", "Távora", "da Silva", "do Vale", "das Neves", "dos Santos", "e Oliveira", "de Melo"]
+        },
+        F: {
+            proprios: ["Leonor", "Isabel", "Beatriz", "Filipa", "Maria", "Ana", "Teresa", "Inês"],
+            sobrenomes: ["de Bragança", "e Castro", "Albuquerque", "Távora", "da Silva", "do Vale", "das Neves", "e Pereira", "de Resende", "y Mendoza"]
+        }
+    },
+    ES: {
+        M: {
+            proprios: ["Carlos", "Fernando", "Alfonso", "Rodrigo", "Diego", "Santiago", "Javier", "Manuel"],
+            sobrenomes: ["de la Vega", "y Cervantes", "del Toro", "de Aragón", "de Castilla", "y Goya", "de Granada", "y Figueroa", "del Río", "de la Cruz"]
+        },
+        F: {
+            proprios: ["Isabel", "Catalina", "Juana", "Ana", "María", "Carmen", "Dolores", "Lucía"],
+            sobrenomes: ["de la Vega", "y Cervantes", "de Aragón", "de Castilla", "de Toledo", "y Mendoza", "del Valle", "de la Rosa", "y Álvarez", "de los Reyes"]
+        }
+    },
+    FR: {
+        M: {
+            proprios: ["Louis", "François", "Henri", "Charles", "Philippe", "Jean", "Pierre", "Étienne"],
+            sobrenomes: ["de Bourgogne", "du Montclair", "de La Rochefoucauld", "de Champagne", "de Versailles", "Leclerc", "Beaumont", "de La Fontaine", "du Bois", "de Saint-Exupéry"]
+        },
+        F: {
+            proprios: ["Anne", "Marie", "Élisabeth", "Marguerite", "Louise", "Sophie", "Jeanne", "Camille"],
+            sobrenomes: ["de Bourgogne", "du Montclair", "de La Rochefoucauld", "de Beauvoir", "de La Tour", "de Saint-Germain", "de La Mer", "de La Lune", "des Étoiles", "du Soleil"]
+        }
+    },
+    EN: {
+        M: {
+            proprios: ["Edward", "Reginald", "Percival", "Algernon", "Bartholomew", "Winston", "Montgomery", "Lancelot"],
+            sobrenomes: ["of Windsor", "Baskerville", "Worthington", "Blackwood", "Ravenshire", "Fairfax", "Huntington", "de Vere", "Fitzwilliam", "St. John"]
+        },
+        F: {
+            proprios: ["Eleanor", "Gwendolyn", "Beatrice", "Victoria", "Arabella", "Cecily", "Henrietta", "Lavinia"],
+            sobrenomes: ["of Windsor", "Baskerville", "Worthington", "Blackwood", "Ravenshire", "Fairfax", "Huntington", "de Clare", "Fitzroy", "Beaufort"]
+        }
+    },
+    JP: {
+        M: {
+            proprios: ["Haruto", "Ren", "Ryoma", "Kaito", "Daiki", "Hiroshi", "Takashi", "Yuto"],
+            sobrenomes: ["Minamoto", "Fujiwara", "Takeda", "Shimazu", "Tokugawa", "Date", "Mori", "Uesugi", "Sanada", "Hattori"]
+        },
+        F: {
+            proprios: ["Sakura", "Aiko", "Hana", "Yui", "Naoko", "Emi", "Mei", "Rina"],
+            sobrenomes: ["Fujiwara", "Takeda", "Shimazu", "Tokugawa", "Date", "Mori", "Uesugi", "Sanada", "Hattori", "Amamiya"]
+        }
+    }
+};
+
+function gerarNome() {
+    const pais = document.getElementById("nacionalidade").value;
+    const genero = document.getElementById("genero").value;
+    
+    const dados = nomes[pais][genero];
+    let componentes = [];
+    
+    // Adiciona 2 nomes próprios
+    componentes.push(dados.proprios[Math.floor(Math.random() * dados.proprios.length)]);
+    componentes.push(dados.proprios[Math.floor(Math.random() * dados.proprios.length)]);
+    
+    // Adiciona 6 sobrenomes
+    for(let i = 0; i < 6; i++) {
+        componentes.push(dados.sobrenomes[Math.floor(Math.random() * dados.sobrenomes.length)]);
+    }
+    
+    // Formatação especial para japonês
+    const nomeFinal = (pais === "JP") 
+        ? componentes.reverse().join(" ") // Sobrenome primeiro
+        : componentes.join(" ");
+    
+    document.getElementById("resultado").innerHTML = `
+        <div class="nome-gerado">
+            ${nomeFinal}
+        </div>
+        <small>(${pais === "JP" ? "Nome japonês: sobrenome primeiro" : "Formato ocidental"})</small>
+    `;
+}
+    </script>
 </body>
 </html>
